@@ -1,0 +1,35 @@
+image: docker:latest
+
+services:
+  - docker:dind
+
+stages:
+  - build
+  - test
+  - deploy
+
+before_script:
+  - echo "Установка зависимостей..."
+  - apk add --no-cache py3-pip
+
+build-job:
+  stage: build
+  script:
+    - echo "Сборка проекта..."
+    - echo "Пример: компиляция или установка зависимостей"
+    - mkdir -p output
+    - echo "Build completed at $(date)" > output/build.txt
+
+test-job:
+  stage: test
+  script:
+    - echo "Запуск тестов..."
+    - echo "Тестирование прошло успешно!"
+
+deploy-job:
+  stage: deploy
+  script:
+    - echo "Этап развертывания (условный)"
+    - cat output/build.txt
+  only:
+    - main
